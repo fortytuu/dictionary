@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<% if params[:query] %>
+  <%= link_to 'Zurück', entries_path %>
+  <p>Ihre Suche nach <%= params[:query] %> ergab <%= @entries.size %> Treffer </p> 
+<% end %>
+
+
+<%= form_tag('/search', method: :get) do %>
+  <%= text_field_tag 'query' %>
+  <%= submit_tag 'Abschicken' %>
+<% end %>
+
+<h1>Listing Entries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Word</th>
+      <th>Translation</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @entries.each do |entry| %>
+      <tr>
+        <td><%= entry.word %></td>
+        <td><%= entry.translation %></td>
+        <td><%= link_to 'Show', entry %></td>
+        <td><%= link_to 'Edit', edit_entry_path(entry) %></td>
+        <td><%= link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Entry', new_entry_path %>
